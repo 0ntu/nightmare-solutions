@@ -3,7 +3,7 @@ from z3 import *
 
 #Designate the input z3 will have control of
 inp = []
-for i in xrange(25):
+for i in range(25):
 	b = BitVec("%s" % i, 8)
 	inp.append(b)
 #Store the input from z3 in the matrix
@@ -65,23 +65,24 @@ enc = [0x8b, 0xce, 0xb0, 0x89, 0x7b, 0xb0, 0xb0, 0xee, 0xbf, 0x92, 0x65, 0x9d, 0
 #Create the z3 constraints for what the output should be:
 #equal to it's corresponding enc value
 #an ascii character to make it easier to input into the program
-for i in xrange(len(enc)):
+for i in range(len(enc)):
 #	print enc[i]
 	z.add(auth[i] == enc[i])
-for i in xrange(25):
-	z.add(inp[i] > 32)
-	z.add(inp[i] < 127)
+# for i in range(25):
+# 	z.add(inp[i] > 32)
+# 	z.add(inp[i] < 127)
 
 #Check if z3 can solve it, and if it can print out the solution
 if z.check() == sat:
 #	print z
-	print "Condition is satisfied, would still recommend crying: " + str(z.check())
+	print("Condition is satisfied, would still recommend crying: " + str(z.check()))
 	solution = z.model()
 	flag = ""
 	for i in inp:
 		flag += chr(int(str(solution[i])))
-	print "solution is: " + flag
+	# print "solution is: " + flag
 
 #Check if z3 can't solve it
 if z.check() == unsat:
-	print "Condition is not satisfied, would recommend crying: " + str(z.check())
+	# print "Condition is not satisfied, would recommend crying: " + str(z.check())
+	pass
